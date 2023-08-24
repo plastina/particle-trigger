@@ -1,18 +1,6 @@
 let particles = [];
 const numParticles = 100;
-const gravity = 0.1;
-
-const particleTypes = {
-  electron: {
-    velocity: createVector(5, -10),
-    trajectory: createVector(1, 0.2) // Trajetória para o elétron
-  },
-  proton: {
-    velocity: createVector(3, -8),
-    trajectory: createVector(1, 0.5) // Defina a trajetória para o próton
-  }, // Vermelho
-};
-
+const particleTypes = ["electron", "proton", "neutrino", "photon"];
 
 
 function setup() {
@@ -30,29 +18,51 @@ function draw() {
   drawParticles();
 }
 
+
 function fireParticle(particleType) {
   let xPosition;
   let yPosition;
+  let xVelocity;
+  let yVelocity;
+  let Xacceleration;
+  let Yacceleration;
 
   if (particleType === "electron") {
     xPosition = 1;
     yPosition = 800;
+    xVelocity = 10;
+    yVelocity = -10;
+    Xacceleration = 1;
+    Yacceleration = 0.5;
+
   } else if (particleType === "proton") {
     xPosition = 5;
     yPosition = 600;
+    xVelocity = 5;
+    yVelocity = 1;
+    Xacceleration = 1;
+    Yacceleration = 0.5;
+
   } else if (particleType === "neutrino") {
     xPosition = 100;
     yPosition = 700;
+    xVelocity = 10;
+    yVelocity = -10;
+
   } else if (particleType === "photon") {
     xPosition = 300;
     yPosition = 500;
-  } // Adicione mais casos para outras partículas aqui
+    xVelocity = 10;
+    yVelocity = -10;
+
+  }
 
 
   let particle = {
     type: particleType,
     position: createVector(xPosition, yPosition),
-    velocity: createVector(5, -10),
+    velocity: createVector(xVelocity, yVelocity),
+    acceleration: createVector(Xacceleration, Yacceleration)
   };
 
   particles.push(particle);
@@ -63,14 +73,21 @@ function drawParticles() {
 
   for (let i = 0; i < particles.length; i++) {
     let particle = particles[i];
+    particle.velocity.x += particle.acceleration.x;
+    
+    if (particle.type === "electron" & particle.position.x > 200) {
+        particle.acceleration.x = -1;
+        particle.acceleration.y = -5;
+        
+    } particle.velocity.y += particle.acceleration.y;
 
-    // Use a cor com base no tipo de partícula
+
+    // Use a classe CSS com base no tipo de partícula
+    // let particleClass = getParticleClass(particle.type);
     fill(getParticleColor(particle.type));
-
     ellipse(particle.position.x, particle.position.y, 10, 10);
 
     particle.position.add(particle.velocity);
-    particle.velocity.y += gravity;
 
     if (particle.position.y > height) {
       particles.splice(i, 1);
@@ -85,5 +102,16 @@ function getParticleColor(particleType) {
       return color(0, 0, 255); // Azul
     case "proton":
       return color(255, 0, 0); // Vermelho
+    case "neutrino":
+      return color(0, 255, 0); // Verde
+  }
+}
+
+function getParticleClass(particleType) {
+  switch (particleType) {
+    case "electron":
+      return ".electron";
+    case "proton":
+      return ".proton";
   }
 }
