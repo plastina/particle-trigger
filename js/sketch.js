@@ -1,5 +1,5 @@
 let particles = [];
-const numParticles = 100;
+// const numParticles = 100;
 const particleTypes = ["electron", "positron", "proton", "antiproton", "muon", "pion"];
 
 function setup() {
@@ -12,7 +12,7 @@ function setup() {
 }
 
 function draw() {
-  background(0, 20);
+  background(0, 7);
 
   drawParticles();
 }
@@ -28,22 +28,24 @@ function fireParticle(particleType) {
   if (particleType === "electron") {
     xPosition = 10;
     yPosition = 500;
-    xVelocity = 10;
-    yVelocity = -10;
+    xVelocity = 5;
+    yVelocity = 3;
     Xacceleration = 1;
-    Yacceleration = 0.5;
+    Yacceleration = 0;
 
   } else if (particleType === "positron") {
     xPosition = 10;
     yPosition = 500;
-    xVelocity = 10;
-    yVelocity = -10;
+    xVelocity = 20;
+    yVelocity = 0.2;
+    Xacceleration = 1;
+    Yacceleration = 0.5;
 
   } else if (particleType === "proton") {
     xPosition = 10;
     yPosition = 500;
     xVelocity = 10;
-    yVelocity = -10;
+    yVelocity = -1;
 
   } else if (particleType === "antiproton") {
     xPosition = 10;
@@ -83,10 +85,27 @@ function drawParticles() {
     let particle = particles[i];
     particle.velocity.x += particle.acceleration.x;
 
-    if (particle.type === "electron" && particle.position.x > 200) {
-      particle.acceleration.x = -1;
-      particle.acceleration.y = -5;
+    if (particle.type === "electron" && particle.position.x > 500) {
+      particle.acceleration.x = 0.5;
+      particle.acceleration.y = 0.5;
+      particle.velocity.y = -10;
     }
+
+    if (particle.type === "positron" && particle.position.x > 500) {
+      particle.acceleration.x = 0.5;
+      particle.acceleration.y = 25;
+      particle.velocity.y = -1;
+
+    }
+
+    if (particle.type === "proton" && particle.position.x > 500) {
+      particle.velocity.x = 3;
+      particle.velocity.y = 1;
+      particle.acceleration.x = 5;
+      particle.acceleration.y = -0.5;
+
+    }
+
 
     particle.velocity.y += particle.acceleration.y;
 
@@ -96,10 +115,10 @@ function drawParticles() {
 
     particle.position.add(particle.velocity);
 
-    if (particle.position.y > height) {
-      particles.splice(i, 1);
-      i--;
-    }
+    // if (particle.position.y > height) {
+    //   particles.splice(i, 1);
+    //   i--;
+    // }
   }
 }
 
