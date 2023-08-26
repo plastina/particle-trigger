@@ -1,6 +1,6 @@
 let particles = [];
 // const numParticles = 100;
-const particleTypes = ["electron", "positron", "proton", "antiproton", "muon", "pion"];
+const particleTypes = ["electron", "positron", "proton", "antiproton", "muon", "photon"];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -12,7 +12,7 @@ function setup() {
 }
 
 function draw() {
-  background(0, 7);
+  background(1, 7);
 
   drawParticles();
 }
@@ -28,10 +28,10 @@ function fireParticle(particleType) {
   if (particleType === "electron") {
     xPosition = 10;
     yPosition = 500;
-    xVelocity = 5;
-    yVelocity = 3;
+    xVelocity = 10;
+    yVelocity = 10;
     Xacceleration = 1;
-    Yacceleration = 0;
+    Yacceleration = -0.3;
 
   } else if (particleType === "positron") {
     xPosition = 10;
@@ -51,21 +51,25 @@ function fireParticle(particleType) {
     xPosition = 10;
     yPosition = 500;
     xVelocity = 10;
-    yVelocity = -10;
+    yVelocity = 1;
+    Xacceleration = 0.5;
+    Yacceleration = 0;
 
   } else if (particleType === "muon") {
     xPosition = 10;
     yPosition = 500;
-    xVelocity = 10;
-    yVelocity = -10;
+    xVelocity = 5;
+    yVelocity = 3;
+    Xacceleration = 1;
+    Yacceleration = 0;
 
-  } else if (particleType === "pion") {
+  } else if (particleType === "photon") {
     xPosition = 10;
     yPosition = 500;
-    xVelocity = 10;
-    yVelocity = -10;
-    Xacceleration = 1;
-    Yacceleration = 0.5;
+    xVelocity = 1;
+    yVelocity = 0;
+    // Xacceleration = 1;
+    // Yacceleration = 0.5;
   }
 
   let particle = {
@@ -86,9 +90,10 @@ function drawParticles() {
     particle.velocity.x += particle.acceleration.x;
 
     if (particle.type === "electron" && particle.position.x > 500) {
-      particle.acceleration.x = 0.5;
-      particle.acceleration.y = 0.5;
-      particle.velocity.y = -10;
+      particle.acceleration.x = 0;
+      particle.acceleration.y = 0;
+      particle.velocity.y = -5;
+      particle.velocity.x = 15;
     }
 
     if (particle.type === "positron" && particle.position.x > 500) {
@@ -103,7 +108,17 @@ function drawParticles() {
       particle.velocity.y = 1;
       particle.acceleration.x = 5;
       particle.acceleration.y = -0.5;
+    }
 
+    if (particle.type === "antiproton" && particle.position.x > 500) {
+      particle.velocity.x = 3;
+      particle.velocity.y = -1;
+      particle.acceleration.x = 5;
+      particle.acceleration.y = -0.5;
+    }
+
+    if (particle.type === "photon" && particle.position.x > 500) {
+      particle.velocity.x = 400;
     }
 
 
@@ -134,7 +149,7 @@ function getParticleColor(particleType) {
       return color(255, 255, 0); // Amarelo
     case "muon":
       return color(255, 0, 255); // Magenta
-    case "pion":
+    case "photon":
       return color(255, 255, 255); // Branco
   }
 }
@@ -151,7 +166,7 @@ function getParticleClass(particleType) {
       return ".antiproton";
     case "muon":
       return ".muon";
-    case "pion":
-      return ".pion";
+    case "photon":
+      return ".photon";
   }
 }

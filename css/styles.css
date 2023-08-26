@@ -5,8 +5,9 @@ body {
   justify-content: left;
   align-items: center;
   height: 100vh;
-  background-color: black;
+  background-color: black
 }
+
 
 .particleButtons {
   display: flex;
@@ -17,32 +18,25 @@ body {
 
 .particleButton {
   margin-bottom: 10px;
-  padding: 10px 20px;
+  padding: 10px 30px;
   background-color: #3498db;
   border: none;
   color: white;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  border-radius: 20px;
 }
 
 .particleButton:hover {
-  background-color: #2980b9;
+  background-color: #124a6e;
 }
 
-
-.electron {
-  background-color: #0000ff;
-}
-
-.proton {
-  background-color: #ff0000;
-}
-
-.neutrino {
-  background-color: #00ff00;
-}
-
-.photon {
-  background-color: #ffff00;
+.footer {
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
