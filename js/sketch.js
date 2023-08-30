@@ -5,15 +5,14 @@ const particleTypes = ["electron", "positron", "proton", "antiproton", "muon", "
 function setup() {
   createCanvas(windowWidth, windowHeight);
   const particleButtons = selectAll(".particleButton");
-
   particleButtons.forEach(button => {
     button.mousePressed(() => fireParticle(button.elt.dataset.particle));
+
   });
 }
 
 function draw() {
-  background(1, 7);
-
+  background(1, 0);
   drawParticles();
 }
 
@@ -150,7 +149,7 @@ function getParticleColor(particleType) {
     case "muon":
       return color(255, 0, 255); // Magenta
     case "photon":
-      return color(255, 255, 255); // Branco
+      return color(0, 0, 0); // Branco
   }
 }
 
