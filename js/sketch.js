@@ -1,6 +1,6 @@
 let particles = [];
 // const numParticles = 100;
-const particleTypes = ["electron", "positron", "proton", "antiproton", "muon", "photon", "pion", "kaon"];
+const particleTypes = ["electron", "positron", "proton", "antiproton", "muon", "photon", "pion", "kaon", "neutrino", "lambda", "d0"];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -86,6 +86,13 @@ function fireParticle(particleType) {
     yVelocity = 0;
     Xacceleration = 0.5;
     Yacceleration = 0;
+
+  } else if (particleType === "neutrino") {
+    xPosition = 70;
+    yPosition = 400;
+    xVelocity = 30;
+    yVelocity = 5;
+
   } else if (particleType === "lambda") {
     xPosition = 70;
     yPosition = 400;
@@ -93,6 +100,7 @@ function fireParticle(particleType) {
     yVelocity = 0;
     Xacceleration = 0.5;
     Yacceleration = 0;
+
   } else if (particleType === "d0") {
     xPosition = 70;
     yPosition = 400;
@@ -209,7 +217,7 @@ function drawParticles() {
         acceleration: createVector(1, 0)
       };
       particles.push(particle1);
-      
+
       let particle2 = {
         type: "pion",
         position: createVector(particle.position.x, particle.position.y),
@@ -217,7 +225,7 @@ function drawParticles() {
         acceleration: createVector(1, 0)
       };
       particles.push(particle2);
-      
+
       particles.splice(i, 1);
       i--;
     }
@@ -230,7 +238,7 @@ function drawParticles() {
         acceleration: createVector(1, 0)
       };
       particles.push(particle3);
-      
+
       let particle2 = {
         type: "pion",
         position: createVector(particle.position.x, particle.position.y),
@@ -238,7 +246,7 @@ function drawParticles() {
         acceleration: createVector(1, 0)
       };
       particles.push(particle2);
-      
+
       particles.splice(i, 1);
       i--;
     }
@@ -277,6 +285,8 @@ function getParticleColor(particleType) {
       return color(250, 210, 35);
     case "kaon":
       return color(200, 203, 42);
+    case "neutrino":
+      return color(0, 0, 0);
     case "lambda":
       return color(244, 164, 96);
     case "d0":
@@ -302,6 +312,8 @@ function getParticleClass(particleType) {
       return ".pion";
     case "kaon":
       return ".kaon";
+    case "neutrino":
+      return ".neutrino";
     case "lambda":
       return ".lambda";
     case "d0":
