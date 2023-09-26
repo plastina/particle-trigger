@@ -153,8 +153,8 @@ function drawParticles() {
     }
 
     if (particle.type === "proton" && particle.position.x > 500) {
-      particle.velocity.x = 3;
-      particle.velocity.y = 1;
+      particle.velocity.x = 15;
+      particle.velocity.y = 2;
       particle.acceleration.x = 5;
       particle.acceleration.y = -0.5;
 
@@ -186,10 +186,10 @@ function drawParticles() {
     }
 
     if (particle.type === "pion" && particle.position.x > 500) {
-      particle.velocity.x = 3;
-      particle.velocity.y = 1;
+      particle.velocity.x = 15;
+      particle.velocity.y = 5;
       particle.acceleration.x = 5;
-      particle.acceleration.y = -0.7;
+      particle.acceleration.y = -7;
 
       if (particle.position.x > 1100) {
         particles.splice(i, 1);
@@ -198,10 +198,10 @@ function drawParticles() {
     }
 
     if (particle.type === "kaon" && particle.position.x > 500) {
-      particle.velocity.x = 3;
-      particle.velocity.y = 1;
+      particle.velocity.x = 17;
+      particle.velocity.y = 5;
       particle.acceleration.x = 5;
-      particle.acceleration.y = -0.5;
+      particle.acceleration.y = -3;
 
       if (particle.position.x > 1100) {
         particles.splice(i, 1);
@@ -230,7 +230,7 @@ function drawParticles() {
       i--;
     }
 
-    if (particle.type === "d0" && particle.position.x > 500) {
+    if (particle.type === "d0" && particle.position.x > 170) {
       let particle3 = {
         type: "kaon",
         position: createVector(particle.position.x, particle.position.y),
