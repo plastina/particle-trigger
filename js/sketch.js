@@ -1,13 +1,16 @@
 let particles = [];
-// const numParticles = 100;
+let temporaryParticles = [];
+
 const particleTypes = ["electron", "positron", "proton", "antiproton", "muon", "photon", "pion", "kaon", "neutrino", "lambda", "d0"];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   const particleButtons = selectAll(".particleButton");
   particleButtons.forEach(button => {
-    button.mousePressed(() => fireParticle(button.elt.dataset.particle));
-
+    button.mousePressed(() => {
+      clear();
+      fireParticle(button.elt.dataset.particle)
+    });
   });
 }
 
@@ -127,18 +130,20 @@ function drawParticles() {
     let particle = particles[i];
     particle.velocity.x += particle.acceleration.x;
 
-    if (particle.type === "electron" && particle.position.x > 500) {
+    if (particle.type === "electron" && particle.position.x > 1000) {
+
       particle.acceleration.x = 0;
       particle.acceleration.y = 0;
       particle.velocity.y = -5;
       particle.velocity.x = 15;
-
-      if (particle.position.x > 1000) {
-        particles.splice(i, 1);
-        i--;
-      }
+      createTemporallyParticles(particle);
+      particles.splice(i, 1);
+      i--;
+      drawTemporallyParticles();
 
     }
+
+
 
     if (particle.type === "positron" && particle.position.x > 500) {
       particle.acceleration.x = 0;
@@ -147,8 +152,11 @@ function drawParticles() {
       particle.velocity.x = 15;
 
       if (particle.position.x > 1000) {
+        createTemporallyParticles(particle);
         particles.splice(i, 1);
         i--;
+        drawTemporallyParticles();
+
       }
     }
 
@@ -159,20 +167,26 @@ function drawParticles() {
       particle.acceleration.y = -0.5;
 
       if (particle.position.x > 1100) {
+        createTemporallyParticles(particle);
         particles.splice(i, 1);
         i--;
+        drawTemporallyParticles();
+
       }
     }
 
     if (particle.type === "antiproton" && particle.position.x > 500) {
-      particle.velocity.x = 3;
-      particle.velocity.y = -0.5;
+      particle.velocity.x = 15;
+      particle.velocity.y = -2;
       particle.acceleration.x = 5;
       particle.acceleration.y = -0.5;
 
       if (particle.position.x > 1100) {
+        createTemporallyParticles(particle);
         particles.splice(i, 1);
         i--;
+        drawTemporallyParticles();
+
       }
     }
 
@@ -180,8 +194,11 @@ function drawParticles() {
       particle.velocity.x = 20;
 
       if (particle.position.x > 1000) {
+        createTemporallyParticles(particle);
         particles.splice(i, 1);
         i--;
+        drawTemporallyParticles();
+
       }
     }
 
@@ -192,8 +209,11 @@ function drawParticles() {
       particle.acceleration.y = -7;
 
       if (particle.position.x > 1100) {
+        createTemporallyParticles(particle);
         particles.splice(i, 1);
         i--;
+        drawTemporallyParticles();
+
       }
     }
 
@@ -204,8 +224,11 @@ function drawParticles() {
       particle.acceleration.y = -3;
 
       if (particle.position.x > 1100) {
+        createTemporallyParticles(particle);
         particles.splice(i, 1);
         i--;
+        drawTemporallyParticles();
+
       }
     }
 
@@ -319,4 +342,35 @@ function getParticleClass(particleType) {
     case "d0":
       return ".d0";
   }
+}
+
+function createTemporallyParticles(particle) {
+  for (let j = 0; j < 100; j++) {
+    let temporaryParticle = {
+      type: particle.type,
+      position: createVector(particle.position.x, particle.position.y),
+      velocity: createVector(random(0, 50), random(-10, 20)), // Velocidade aleatória
+      lifespan: 60 // Tempo de vida da partícula temporária em quadros (ajuste conforme necessário)
+    };
+
+    temporaryParticles.push(temporaryParticle);
+  }
+}
+
+function drawTemporallyParticles() {
+  for (let i = 0; i < temporaryParticles.length; i++) {
+    let temporaryParticle = temporaryParticles[i];
+
+    temporaryParticle.position.add(temporaryParticle.velocity);
+    temporaryParticle.lifespan--;
+
+    fill(getParticleColor(temporaryParticle.type));
+    ellipse(temporaryParticle.position.x, temporaryParticle.position.y, 5, 5);
+
+    if (temporaryParticle.lifespan <= 0) {
+      temporaryParticles.splice(i, 1);
+      i--;
+    }
+  }
+  temporaryParticles = [];
 }
