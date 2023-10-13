@@ -111,13 +111,28 @@ function fireParticle(particleType) {
     yVelocity = 0;
     Xacceleration = 0.5;
     Yacceleration = 0;
+  } else if (particleType === "d01") {
+    xPosition = 70;
+    yPosition = 400;
+    xVelocity = 10;
+    yVelocity = 0;
+    Xacceleration = 0.5;
+    Yacceleration = 0;
+  } else if (particleType === "d02") {
+    xPosition = 70;
+    yPosition = 400;
+    xVelocity = 10;
+    yVelocity = 0;
+    Xacceleration = 0.5;
+    Yacceleration = 0;
   }
 
   let particle = {
     type: particleType,
     position: createVector(xPosition, yPosition),
     velocity: createVector(xVelocity, yVelocity),
-    acceleration: createVector(Xacceleration, Yacceleration)
+    acceleration: createVector(Xacceleration, Yacceleration),
+    lifespan: 60
   };
 
   particles.push(particle);
@@ -130,7 +145,7 @@ function drawParticles() {
     let particle = particles[i];
     particle.velocity.x += particle.acceleration.x;
 
-    if (particle.type === "electron" && particle.position.x > 1000) {
+    if (particle.type === "electron" && particle.position.x > 965) {
 
       particle.acceleration.x = 0;
       particle.acceleration.y = 0;
@@ -166,7 +181,7 @@ function drawParticles() {
       particle.acceleration.x = 5;
       particle.acceleration.y = -0.5;
 
-      if (particle.position.x > 1100) {
+      if (particle.position.x > 1040) {
         createTemporallyParticles(particle);
         particles.splice(i, 1);
         i--;
@@ -199,7 +214,7 @@ function drawParticles() {
         i--;
         drawTemporallyParticles();
 
-      }
+      }      
     }
 
     if (particle.type === "pion" && particle.position.x > 500) {
@@ -208,7 +223,7 @@ function drawParticles() {
       particle.acceleration.x = 5;
       particle.acceleration.y = -7;
 
-      if (particle.position.x > 1100) {
+      if (particle.position.x > 1040) {
         createTemporallyParticles(particle);
         particles.splice(i, 1);
         i--;
@@ -223,7 +238,7 @@ function drawParticles() {
       particle.acceleration.x = 5;
       particle.acceleration.y = -3;
 
-      if (particle.position.x > 1100) {
+      if (particle.position.x > 1040) {
         createTemporallyParticles(particle);
         particles.splice(i, 1);
         i--;
@@ -253,26 +268,38 @@ function drawParticles() {
       i--;
     }
 
-    if (particle.type === "d0" && particle.position.x > 170) {
-      let particle3 = {
-        type: "kaon",
-        position: createVector(particle.position.x, particle.position.y),
-        velocity: createVector(5, 0),
-        acceleration: createVector(1, 0)
-      };
-      particles.push(particle3);
-
-      let particle2 = {
-        type: "pion",
-        position: createVector(particle.position.x, particle.position.y),
-        velocity: createVector(5, 0),
-        acceleration: createVector(1, 0)
-      };
-      particles.push(particle2);
-
+    if (particle.type === "d0" && particle.position.x > 120) {
       particles.splice(i, 1);
       i--;
+
+      // Crie duas novas partículas genéricas
+      let particle3 = {
+        type: "d1",
+        position: createVector(particle.position.x, particle.position.y),
+        velocity: createVector(30, 3),
+        acceleration: createVector(0, 0),
+      };
+      let particle4 = {
+        type: "d1",
+        position: createVector(particle.position.x, particle.position.y),
+        velocity: createVector(30, -3),
+        acceleration: createVector(0, 0),
+      };
+
+      particles.push(particle3);
+      particles.push(particle4);
     }
+
+    // Dentro do loop principal, verifique se as partículas "d1" atingiram a posição x igual a 500 e remova-as.
+    for (let i = 0; i < particles.length; i++) {
+      let particle = particles[i];
+
+      if (particle.type === "d1" && particle.position.x > 1100) {
+        particles.splice(i, 1);
+        i--;
+      }
+    }
+
 
 
     particle.velocity.y += particle.acceleration.y;
@@ -313,7 +340,9 @@ function getParticleColor(particleType) {
     case "lambda":
       return color(244, 164, 96);
     case "d0":
-      return color(244, 164, 96);
+      return color(0, 0, 0);
+    case "d1":
+      return color(0, 0, 0);
   }
 }
 
@@ -345,11 +374,11 @@ function getParticleClass(particleType) {
 }
 
 function createTemporallyParticles(particle) {
-  for (let j = 0; j < 100; j++) {
+  for (let j = 0; j < 40; j++) {
     let temporaryParticle = {
       type: particle.type,
       position: createVector(particle.position.x, particle.position.y),
-      velocity: createVector(random(0, 50), random(-10, 20)), // Velocidade aleatória
+      velocity: createVector(random(5, 40), random(-10, 10)), // Velocidade aleatória
       lifespan: 60 // Tempo de vida da partícula temporária em quadros (ajuste conforme necessário)
     };
 
@@ -364,8 +393,11 @@ function drawTemporallyParticles() {
     temporaryParticle.position.add(temporaryParticle.velocity);
     temporaryParticle.lifespan--;
 
-    fill(getParticleColor(temporaryParticle.type));
-    ellipse(temporaryParticle.position.x, temporaryParticle.position.y, 5, 5);
+    stroke(getParticleColor(temporaryParticle.type)); // Define a cor da linha
+    strokeWeight(2); // Ajusta a largura da linha conforme necessário
+    let nextX = temporaryParticle.position.x + temporaryParticle.velocity.x;
+    let nextY = temporaryParticle.position.y + temporaryParticle.velocity.y;
+    line(temporaryParticle.position.x, temporaryParticle.position.y, nextX, nextY);
 
     if (temporaryParticle.lifespan <= 0) {
       temporaryParticles.splice(i, 1);
