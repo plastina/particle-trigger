@@ -330,7 +330,7 @@ function getParticleColor(particleType) {
     case "muon":
       return color(0, 100, 0);
     case "photon":
-      return color(50, 205, 50);
+      return color(220, 154, 216);
     case "pion":
       return color(250, 210, 35);
     case "kaon":
