@@ -1,6 +1,6 @@
 # Particle Trigger
 
-Esta aplicação é uma simulação interativa de partículas subatômicas, oferecendo uma representação visual de diferentes tipos de partículas e seus comportamentos. Os usuários podem selecionar uma partícula específica para "disparar" e observar como ela interage com o ambiente. 
+Esta aplicação é uma simulação interativa de partículas subatômicas, oferecendo uma representação visual de diferentes tipos de partículas e seus comportamentos. Os usuários podem selecionar uma partícula específica para "disparar" e observar como ela interage com o ambiente. Tive como objetivo principal desenvolve-la no meu TCC para facilitar o entendimento de alunos de ensino médio sobre o tema.
 
 Este é o resultado: https://github.com/plastina/particle-trigger
 
