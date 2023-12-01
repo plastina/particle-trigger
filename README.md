@@ -15,17 +15,20 @@ Manipulação de Arrays e Estrutura de Dados: Para rastrear várias partículas 
 ## Stack 
 
 p5.js: Biblioteca para facilitar a criação de gráficos e interatividade em JavaScript.
+
 JavaScript: Linguagem principal para lógica de programação.
+
 HTML/CSS: Estrutura e estilo básico da aplicação.
 
 
 ## Instalação
 
 Clone este repositório: https://github.com/plastina/particle-trigger
+
 Abra o arquivo "index.html" em seu navegador
 
 
-## Autores
+## Autor
 
 ```bash
 - [@plastina](https://github.com/plastina/)
