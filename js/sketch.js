@@ -5,6 +5,7 @@ const particleTypes = ["electron", "positron", "proton", "antiproton", "muon", "
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
   const particleButtons = selectAll(".particleButton");
   particleButtons.forEach(button => {
     button.mousePressed(() => {
@@ -19,13 +20,11 @@ function draw() {
   drawParticles();
 }
 
+
 function fireParticle(particleType) {
   let xPosition;
   let yPosition;
-  let xVelocity;
-  let yVelocity;
-  let Xacceleration;
-  let Yacceleration;
+  let xVelocity, yVelocity, Xacceleration, Yacceleration;
 
   if (particleType === "electron") {
     xPosition = 70;
@@ -139,14 +138,13 @@ function fireParticle(particleType) {
 }
 
 function drawParticles() {
-  noStroke();
+  // noStroke();
 
   for (let i = 0; i < particles.length; i++) {
     let particle = particles[i];
     particle.velocity.x += particle.acceleration.x;
 
     if (particle.type === "electron" && particle.position.x > 965) {
-
       particle.acceleration.x = 0;
       particle.acceleration.y = 0;
       particle.velocity.y = -5;
@@ -157,6 +155,9 @@ function drawParticles() {
       drawTemporallyParticles();
 
     }
+
+  // Limpa o array de partículas antes de desenhar as temporárias
+
 
 
 
@@ -208,13 +209,13 @@ function drawParticles() {
     if (particle.type === "photon" && particle.position.x > 500) {
       particle.velocity.x = 20;
 
-      if (particle.position.x > 1000) {
+      if (particle.position.x > 940) {
         createTemporallyParticles(particle);
         particles.splice(i, 1);
         i--;
         drawTemporallyParticles();
 
-      }      
+      }
     }
 
     if (particle.type === "pion" && particle.position.x > 500) {
@@ -343,33 +344,6 @@ function getParticleColor(particleType) {
       return color(0, 0, 0);
     case "d1":
       return color(0, 0, 0);
-  }
-}
-
-function getParticleClass(particleType) {
-  switch (particleType) {
-    case "electron":
-      return ".electron";
-    case "positron":
-      return ".positron";
-    case "proton":
-      return ".proton";
-    case "antiproton":
-      return ".antiproton";
-    case "muon":
-      return ".muon";
-    case "photon":
-      return ".photon";
-    case "pion":
-      return ".pion";
-    case "kaon":
-      return ".kaon";
-    case "neutrino":
-      return ".neutrino";
-    case "lambda":
-      return ".lambda";
-    case "d0":
-      return ".d0";
   }
 }
 
